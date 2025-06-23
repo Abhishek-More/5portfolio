@@ -10,8 +10,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-three/drei": "^10.3.0",
+    "@react-three/fiber": "^9.1.2",
+    "@splinetool/loader": "^1.10.13",
+    "@splinetool/r3f-spline": "^1.0.2",
+    "@splinetool/react-spline": "^4.0.0",
+    "@splinetool/runtime": "^1.10.13",
+    "@tailwindcss/vite": "^4.1.10",
+    "@types/three": "^0.177.0",
+    "patch-package": "^8.0.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.10",
+    "three": "^0.177.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
