@@ -1,17 +1,41 @@
-import { useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "motion/react";
 import { useAtom } from "jotai";
 import { githubHoverAtom } from "../../atoms/hover";
 
-export const Github = ({ contributions }: { contributions: any }) => {
+export const Github = () => {
   const [githubHover] = useAtom(githubHoverAtom);
+  const [contributions, setContributions] = useState<{
+    contributions: Array<{ count: number; date: string; level: number }>
+  } | null>(null);
+
+  useEffect(() => {
+    const fetchContributions = async () => {
+      const res = await fetch(
+        "https://github-contributions-api.jogruber.de/v4/abhishek-more?y=last",
+      );
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      const data = await res.json();
+
+      console.log(data);
+      setContributions(data);
+    };
+
+    fetchContributions();
+  }, []);
   const contributionElements = useMemo(() => {
+    if (!contributions) return null;
+    
     const day = new Date().getDay();
 
     //Get the last 13 weeks + current week's days of contributions
     const datedContributions = contributions.contributions.slice(-91 - day - 1);
 
-    return datedContributions.map((contribution: any, index: number) => (
+    return datedContributions.map((contribution: { count: number; date: string; level: number }, index: number) => (
       <div
         key={index}
         className={`${

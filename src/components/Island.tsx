@@ -1,32 +1,9 @@
-import { useState, useEffect } from "react";
-import { Github } from "./popups/Github";
 import { devpostHoverAtom } from "../atoms/hover";
 import { motion } from "motion/react";
 import { useAtom } from "jotai";
 
 export const Island = () => {
-  const [contributions, setContributions] = useState(null);
   const [devpostHover] = useAtom(devpostHoverAtom);
-  console.log(devpostHover);
-
-  useEffect(() => {
-    const fetchContributions = async () => {
-      const res = await fetch(
-        "https://github-contributions-api.jogruber.de/v4/abhishek-more?y=last",
-      );
-
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-
-      const data = await res.json();
-
-      console.log(data);
-      setContributions(data);
-    };
-
-    fetchContributions();
-  }, []);
 
   return (
     <div className="absolute bottom-0 left-0">
