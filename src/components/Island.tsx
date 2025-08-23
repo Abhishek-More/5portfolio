@@ -30,9 +30,9 @@ export const Island = () => {
 
   return (
     <div className="absolute bottom-0 left-0">
-      <div className="absolute bottom-[72px]">
-        <Github contributions={contributions} />
-      </div>
+      {/* <div className="absolute bottom-[72px]"> */}
+      {/*   <Github contributions={contributions} /> */}
+      {/* </div> */}
 
       <img
         src="/crown.gif"
