@@ -6,7 +6,7 @@ import { githubHoverAtom } from "../../atoms/hover";
 export const Github = () => {
   const [githubHover] = useAtom(githubHoverAtom);
   const [contributions, setContributions] = useState<{
-    contributions: Array<{ count: number; date: string; level: number }>
+    contributions: Array<{ count: number; date: string; level: number }>;
   } | null>(null);
 
   useEffect(() => {
@@ -21,7 +21,6 @@ export const Github = () => {
 
       const data = await res.json();
 
-      console.log(data);
       setContributions(data);
     };
 
@@ -29,20 +28,25 @@ export const Github = () => {
   }, []);
   const contributionElements = useMemo(() => {
     if (!contributions) return null;
-    
+
     const day = new Date().getDay();
 
     //Get the last 13 weeks + current week's days of contributions
     const datedContributions = contributions.contributions.slice(-91 - day - 1);
 
-    return datedContributions.map((contribution: { count: number; date: string; level: number }, index: number) => (
-      <div
-        key={index}
-        className={`${
-          contribution.count > 0 ? "bg-[#7BFD79] opacity-80" : "bg-gray-700"
-        } w-3 h-3 rounded-sm`}
-      ></div>
-    ));
+    return datedContributions.map(
+      (
+        contribution: { count: number; date: string; level: number },
+        index: number,
+      ) => (
+        <div
+          key={index}
+          className={`${
+            contribution.count > 0 ? "bg-[#7BFD79] opacity-80" : "bg-gray-700"
+          } w-3 h-3 rounded-sm`}
+        ></div>
+      ),
+    );
   }, [contributions]);
 
   return (
