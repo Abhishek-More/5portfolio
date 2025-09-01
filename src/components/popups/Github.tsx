@@ -26,6 +26,7 @@ export const Github = () => {
 
     fetchContributions();
   }, []);
+
   const contributionElements = useMemo(() => {
     if (!contributions) return null;
 
@@ -49,9 +50,11 @@ export const Github = () => {
     );
   }, [contributions]);
 
+  if (!contributions) return null;
+
   return (
     <motion.div
-      className="w-[260px] bg-black rounded-[25px] flex flex-col justify-center mx-auto p-4 border-2 border-gray-900"
+      className="w-[260px] bg-black rounded-[25px] flex flex-col justify-center mx-auto p-4 border-2 border-gray-900 opacity-0"
       animate={{
         y: githubHover ? 0 : 10,
         opacity: githubHover ? 1 : 0,

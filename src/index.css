@@ -83,3 +83,163 @@
   width: 300%;
   animation: animateGrain 8s steps(10) infinite;
 }
+
+.vhs-glitch {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  pointer-events: none;
+  opacity: 0;
+  animation: vhsGlitch 15s infinite;
+}
+
+.vhs-glitch::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 0, 0, 0.1) 2%,
+    transparent 4%,
+    rgba(0, 255, 0, 0.1) 6%,
+    transparent 8%,
+    rgba(0, 0, 255, 0.1) 10%,
+    transparent 12%
+  );
+  animation: rgbShift 0.3s infinite;
+}
+
+.vhs-glitch::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.8);
+  animation: scanlines 0.1s infinite;
+}
+
+.vhs-static {
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  width: 40%;
+  height: 40%;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.03) 2px,
+      rgba(255, 255, 255, 0.03) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.03) 2px,
+      rgba(0, 0, 0, 0.03) 4px
+    );
+  animation: staticGlitch 12s infinite;
+}
+
+@keyframes vhsGlitch {
+  0%,
+  95% {
+    opacity: 0;
+  }
+  96%,
+  98% {
+    opacity: 1;
+    transform: translateX(2px) skew(1deg);
+  }
+  99%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes rgbShift {
+  0% {
+    transform: translateX(0) scaleX(1);
+  }
+  25% {
+    transform: translateX(-1px) scaleX(1.01);
+  }
+  50% {
+    transform: translateX(1px) scaleX(0.99);
+  }
+  75% {
+    transform: translateX(-0.5px) scaleX(1.005);
+  }
+  100% {
+    transform: translateX(0) scaleX(1);
+  }
+}
+
+@keyframes scanlines {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+@keyframes staticGlitch {
+  0%,
+  90% {
+    opacity: 0;
+  }
+  91%,
+  94% {
+    opacity: 0.05;
+  }
+  95%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.gym-fade-in {
+  opacity: 0;
+  animation: fadeIn 1.5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.crt-tv {
+  transform: perspective(1000px) rotateY(0deg);
+  border-radius: 15px;
+  box-shadow: 
+    inset 0 0 50px rgba(0, 0, 0, 0.8),
+    0 0 0 8px #333,
+    0 0 0 12px #222,
+    0 8px 20px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.crt-tv::before {
+  content: "";
+  position: absolute;
+  top: -5%;
+  left: -5%;
+  right: -5%;
+  bottom: -5%;
+  background: radial-gradient(ellipse at center, transparent 70%, rgba(0, 0, 0, 0.4) 100%);
+  border-radius: 20px;
+  pointer-events: none;
+  z-index: 10;
+}

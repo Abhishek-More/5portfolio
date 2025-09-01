@@ -3,7 +3,7 @@ import { Overlay } from "./components/Overlay";
 
 function App() {
   return (
-    <div className="flex items-center justify-center h-1/2 lg:h-screen w-screen overflow-hidden">
+    <div className="flex items-center justify-center h-screen w-screen overflow-hidden">
       <Gym />
       <Overlay />
     </div>

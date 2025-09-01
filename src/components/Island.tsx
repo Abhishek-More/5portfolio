@@ -1,41 +1,36 @@
 import { devpostHoverAtom } from "../atoms/hover";
 import { motion } from "motion/react";
 import { useAtom } from "jotai";
+import { useRef } from "react";
+import { Github } from "./popups/Github";
 
 export const Island = () => {
   const [devpostHover] = useAtom(devpostHoverAtom);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="absolute bottom-0 left-0">
-      {/* <div className="absolute bottom-[72px]"> */}
-      {/*   <Github contributions={contributions} /> */}
-      {/* </div> */}
+      <div className="absolute bottom-[72px]">
+        <Github />
+      </div>
 
       <img
         src="/crown.gif"
         width={50}
         height={50}
         alt=""
-        className={`${devpostHover ? "opacity-100" : "opacity-0"} absolute -translate-x-5 -translate-y-5 -rotate-45 transition-opacity duration-300 z-10`}
+        className={`${devpostHover ? "opacity-80" : "opacity-0"} absolute -translate-x-5 -translate-y-5 -rotate-45 transition-opacity duration-300 z-10`}
       />
+
       <motion.div
-        initial={{
-          scale: 0,
-          width: 60,
-        }}
-        animate={{
-          scale: [0, 1, 1, 1],
-          width: [60, 150, 200, 260],
-        }}
-        transition={{
-          delay: 0.75,
-          times: [0, 0.25, 0.5, 0.75],
-          duration: 0.75,
-          type: "spring",
-          bounce: 0.1,
-        }}
+        initial={{ opacity: 0, y: 30, x: -30 }}
+        animate={{ opacity: 1, y: 0, x: 0 }}
+        transition={{ duration: 0.3 }}
       >
-        <div className="relative flex justify-between items-center mx-auto h-[60px] w-[260px] bg-black rounded-full p-2 overflow-hidden border-2 border-gray-900 z-20">
+        <div
+          ref={containerRef}
+          className="relative flex justify-between items-center mx-auto h-[60px] w-[260px] bg-black rounded-full p-2 overflow-hidden border-2 border-gray-900 z-20"
+        >
           <div className="flex">
             <div
               className={`flex-shrink-0 h-[44px] w-[44px] rounded-full bg-gray-300 my-auto overflow-hidden transition-all duration-1000`}
