@@ -3,13 +3,15 @@ import { motion } from "motion/react";
 import { useAtom } from "jotai";
 import { useRef } from "react";
 import { Github } from "./popups/Github";
+import { preloaderDoneAtom } from "../atoms/gym";
 
 export const Island = () => {
   const [devpostHover] = useAtom(devpostHoverAtom);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [preloaderComplete] = useAtom(preloaderDoneAtom);
 
   return (
-    <div className="absolute bottom-0 left-0">
+    <div className="absolute bottom-0 left-0 z-50">
       <div className="absolute bottom-[72px]">
         <Github />
       </div>
@@ -23,9 +25,10 @@ export const Island = () => {
       />
 
       <motion.div
-        initial={{ opacity: 0, y: 30, x: -30 }}
-        animate={{ opacity: 1, y: 0, x: 0 }}
-        transition={{ duration: 0.3 }}
+        initial={{ opacity: 0, y: 20, x: -20, scale: 1.1 }}
+        animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
+        transition={{ duration: 0.4, delay: 0.3, ease: "easeInOut" }}
+        className="origin-bottom-left"
       >
         <div
           ref={containerRef}
