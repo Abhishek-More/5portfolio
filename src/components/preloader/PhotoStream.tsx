@@ -32,7 +32,7 @@ const images: PolaroidImage[] = [
 
 //Had to add this because the first photo would freeze a little bit. This should be the time that the previous animation took.
 const PHOTO_STREAM_DELAY = 750;
-const PHOTO_STREAM_DURATION = 150;
+const PHOTO_STREAM_DURATION = 100;
 const PHOTO_STREAM_ANGLE = 4;
 
 export const PhotoStream = () => {
@@ -73,12 +73,12 @@ export const PhotoStream = () => {
             className="absolute"
             initial={{
               opacity: 0,
-              scale: 1.1,
+              scale: 1,
               rotate: `${rotations[index]}deg`,
             }}
             animate={{
               opacity: isVisible ? opacity : 0,
-              scale: isVisible ? 1 : 1.1,
+              scale: isVisible ? 1 : 1,
             }}
             transition={{ duration: 0.05 }}
             style={{
