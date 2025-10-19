@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { motion, useMotionValue } from "motion/react";
 import { useEffect, type RefObject } from "react";
 
 const cursorSize = 20;

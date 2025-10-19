@@ -3,12 +3,10 @@ import { motion } from "motion/react";
 import { useAtom } from "jotai";
 import { useRef } from "react";
 import { Github } from "./popups/Github";
-import { preloaderDoneAtom } from "../atoms/gym";
 
 export const Island = () => {
   const [devpostHover] = useAtom(devpostHoverAtom);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [preloaderComplete] = useAtom(preloaderDoneAtom);
 
   return (
     <div className="absolute bottom-0 left-0 z-50">

@@ -9,7 +9,7 @@ const words = ["loading", "loading"];
 export const Loading = () => {
   const [finishedPreloader, setFinishedPreloader] = useState(false);
   const [gymLoaded] = useAtom(gymLoadedAtom);
-  const [preloaderDone, setPreloaderDone] = useAtom(preloaderDoneAtom);
+  const [_, setPreloaderDone] = useAtom(preloaderDoneAtom);
 
   useEffect(() => {
     const timer = setTimeout(() => {

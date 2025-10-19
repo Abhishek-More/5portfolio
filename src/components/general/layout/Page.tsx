@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import type { JSX } from "react";
 
 export const Page = ({
   className,

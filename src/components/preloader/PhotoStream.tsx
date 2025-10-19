@@ -37,6 +37,7 @@ const PHOTO_STREAM_ANGLE = 4;
 
 export const PhotoStream = () => {
   const [visibleIndex, setVisibleIndex] = useState(-1);
+  const [rumbleState, setRumbleState] = useState<"idle" | "rumbling">("idle");
 
   const rotations = images.map(
     (_, index) =>
@@ -59,6 +60,15 @@ export const PhotoStream = () => {
     return () => timers.forEach((timer) => clearTimeout(timer));
   }, []);
 
+  const handleRumble = () => {
+    if (rumbleState !== "idle") return;
+
+    setRumbleState("rumbling");
+    setTimeout(() => setRumbleState("idle"), 500);
+
+    return;
+  };
+
   return (
     <div className="relative flex items-center justify-center min-h-[200px]">
       {images.map((image, index) => {
@@ -67,10 +77,12 @@ export const PhotoStream = () => {
         //As a card gets further in the stack, decrease its opacity slightly for a cool effect
         const opacity = (1 / (visibleIndex - index + 1)) * 5;
 
+        const isFirstPolaroid = index === images.length - 1;
+
         return (
           <motion.div
             key={index}
-            className="absolute"
+            className="absolute cursor-pointer "
             initial={{
               opacity: 0,
               scale: 1,
@@ -79,11 +91,24 @@ export const PhotoStream = () => {
             animate={{
               opacity: isVisible ? opacity : 0,
               scale: isVisible ? 1 : 1,
+              x:
+                isFirstPolaroid && rumbleState === "rumbling"
+                  ? [-2, 2, -1, 1, 0]
+                  : 0,
+              y:
+                isFirstPolaroid && rumbleState === "rumbling"
+                  ? [-1, 1, -1, 1, 0]
+                  : 0,
             }}
-            transition={{ duration: 0.05 }}
+            transition={{
+              duration: 0.05,
+              x: { duration: 0.1, repeat: 3 },
+              y: { duration: 0.1, repeat: 3 },
+            }}
             style={{
               zIndex: index,
             }}
+            onMouseEnter={isFirstPolaroid ? handleRumble : undefined}
           >
             <Polaroid image={image} />
           </motion.div>
