@@ -3,10 +3,14 @@ import { motion } from "motion/react";
 import { useAtom } from "jotai";
 import { useRef } from "react";
 import { Github } from "./popups/Github";
+import { useSpotify } from "../hooks/useSpotify";
 
 export const Island = () => {
   const [devpostHover] = useAtom(devpostHoverAtom);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { isPlaying } = useSpotify();
+
+  console.log(isPlaying);
 
   return (
     <div className="absolute bottom-0 left-0 z-50">
@@ -25,7 +29,7 @@ export const Island = () => {
       <motion.div
         initial={{ opacity: 0, y: 20, x: -20, scale: 1.1 }}
         animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
-        transition={{ duration: 0.4, delay: 0.3, ease: "easeInOut" }}
+        transition={{ duration: 0.3, delay: 0.5, ease: "easeInOut" }}
         className="origin-bottom-left"
       >
         <div
@@ -34,7 +38,7 @@ export const Island = () => {
         >
           <div className="flex">
             <div
-              className={`flex-shrink-0 h-[44px] w-[44px] rounded-full bg-gray-300 my-auto overflow-hidden transition-all duration-1000`}
+              className={`flex-shrink-0 h-[44px] w-[44px] rounded-full bg-gray-300 my-auto overflow-hidden transition-all duration-1000 ${isPlaying ? "ring-2 ring-green-400" : ""}`}
             >
               <img
                 className="-translate-x-1 opacity-100"
