@@ -20,7 +20,6 @@ export const Gym = () => {
   function onLoad(spline: any) {
     const obj = spline.findObjectByName("Board");
     if (obj) {
-      console.log("");
       setGymLoaded(true);
     }
   }

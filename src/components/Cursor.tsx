@@ -20,8 +20,6 @@ export const Cursor = ({
 
     mouse.x.set(event.clientX - containerRect.left - cursorSize / 2);
     mouse.y.set(event.clientY - containerRect.top - cursorSize / 2);
-
-    console.log(mouse.x.get(), mouse.y.get());
   };
 
   useEffect(() => {

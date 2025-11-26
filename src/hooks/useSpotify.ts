@@ -1,53 +1,39 @@
 import { useEffect, useState } from "react";
 
 interface SpotifyCurrentlyPlaying {
-  is_playing: boolean;
-  item?: {
-    name: string;
-    artists: Array<{ name: string }>;
-  };
+  album: string;
+  albumImageUrl: string;
+  artist: string;
+  isPlaying: boolean;
+  songUrl: string;
+  title: string;
+  duration: number;
+  timestamp: number;
 }
 
 export const useSpotify = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTrack, setCurrentTrack] = useState<string | null>(null);
+  const [currentTrack, setCurrentTrack] =
+    useState<SpotifyCurrentlyPlaying | null>(null);
 
   useEffect(() => {
     const fetchCurrentlyPlaying = async () => {
       try {
-        const token = import.meta.env.VITE_SPOTIFY_REFRESH_TOKEN;
-
-        if (!token) return;
-
         const response = await fetch(
-          "https://api.spotify.com/v1/me/player/currently-playing",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
+          "https://3portfolio-gray.vercel.app/api/spotify",
         );
 
-        if (response.status === 204) {
-          setIsPlaying(false);
-          setCurrentTrack(null);
-          return;
-        }
+        const data: SpotifyCurrentlyPlaying | null = await response.json();
 
-        if (response.ok) {
-          const data: SpotifyCurrentlyPlaying = await response.json();
-          setIsPlaying(data.is_playing);
-          setCurrentTrack(
-            data.item
-              ? `${data.item.name} - ${data.item.artists.map((a) => a.name).join(", ")}`
-              : null,
-          );
+        if (data?.isPlaying) {
+          setIsPlaying(true);
+          setCurrentTrack(data);
         } else {
           setIsPlaying(false);
           setCurrentTrack(null);
         }
       } catch (error) {
-        console.error("Error fetching Spotify data:", error);
+        console.log("Error fetching Spotify data:", error);
         setIsPlaying(false);
         setCurrentTrack(null);
       }

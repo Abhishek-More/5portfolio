@@ -1,21 +1,26 @@
-import { devpostHoverAtom } from "../atoms/hover";
+import { devpostHoverAtom, spotifyHoverAtom } from "../atoms/hover";
 import { motion } from "motion/react";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { useRef } from "react";
 import { Github } from "./popups/Github";
 import { useSpotify } from "../hooks/useSpotify";
+import { SpotifyPopup } from "./popups/Spotify";
 
 export const Island = () => {
   const [devpostHover] = useAtom(devpostHoverAtom);
+  const setSpotifyHover = useSetAtom(spotifyHoverAtom);
   const containerRef = useRef<HTMLDivElement>(null);
   const { isPlaying } = useSpotify();
 
-  console.log(isPlaying);
+  const handleSpotifyHover = (isHovering: boolean) => {
+    setSpotifyHover(isHovering);
+  };
 
   return (
-    <div className="absolute bottom-0 left-0 z-50">
+    <div className="absolute bottom-0 left-0 z-[1000]">
       <div className="absolute bottom-[72px]">
         <Github />
+        <SpotifyPopup />
       </div>
 
       <img
@@ -34,11 +39,13 @@ export const Island = () => {
       >
         <div
           ref={containerRef}
-          className="relative flex justify-between items-center mx-auto h-[60px] w-[260px] bg-black rounded-full p-2 overflow-hidden border-2 border-gray-900 z-20"
+          className="relative flex justify-between items-center mx-auto h-[60px] w-[260px] bg-black rounded-full p-2 overflow-hidden border-2 border-gray-900 z-[100]"
         >
           <div className="flex">
             <div
-              className={`flex-shrink-0 h-[44px] w-[44px] rounded-full bg-gray-300 my-auto overflow-hidden transition-all duration-1000 ${isPlaying ? "ring-2 ring-green-400" : ""}`}
+              className={`flex-shrink-0 h-[44px] w-[44px] rounded-full bg-gray-300 my-auto overflow-hidden transition-all duration-1000 ${isPlaying ? "ring-2 ring-[#1DB954]" : ""}`}
+              onMouseEnter={() => handleSpotifyHover(true)}
+              onMouseLeave={() => handleSpotifyHover(false)}
             >
               <img
                 className="-translate-x-1 opacity-100"

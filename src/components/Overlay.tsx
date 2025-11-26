@@ -9,12 +9,12 @@ export const Overlay = () => {
   const setDevpostHover = useSetAtom(devpostHoverAtom);
 
   return (
-    <div className="absolute top-6 bottom-6 left-8 right-8 pointer-events-none z-50">
+    <div className="absolute bottom-6 left-8 right-8 z-[100] select-none">
       <motion.div
         initial={{ opacity: 0, y: 20, x: 20, scale: 1.1 }}
         animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
         transition={{ duration: 0.3, delay: 0.5, ease: "easeInOut" }}
-        className="absolute bottom-0 right-0 pointer-events-none bg-black"
+        className="absolute bottom-0 right-0 bg-black"
       >
         <div className="flex items-center gap-4">
           <OverlayButton
@@ -24,17 +24,17 @@ export const Overlay = () => {
           />
           <OverlayButton
             text="github"
-            link="#"
+            link="https://github.com/abhishek-more"
             onHover={(isHovering: boolean) => setGithubHover(isHovering)}
           />
           <OverlayButton
             text="linkedin"
-            link="#"
+            link="https://www.linkedin.com/in/abhishek-more-linked/"
             onHover={(isHovering: boolean) => setGithubHover(isHovering)}
           />
           <OverlayButton
             text="devpost"
-            link="#"
+            link="https://devpost.com/AbhishekMore"
             onHover={(isHovering: boolean) => setDevpostHover(isHovering)}
           />
         </div>

@@ -1,7 +1,13 @@
 import { useRef, useState } from "react";
 import { motion } from "motion/react";
 
-export default function Magnetic({ children }: { children: React.ReactNode }) {
+export default function Magnetic({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -11,7 +17,7 @@ export default function Magnetic({ children }: { children: React.ReactNode }) {
     const { clientX, clientY } = e;
     const { height, width, left, top } = ref.current.getBoundingClientRect();
 
-    const dampingFactor = 0.3;
+    const dampingFactor = 1;
     const middleX = clientX - (left + width / 2);
     const middleY = clientY - (top + height / 2);
 
@@ -29,7 +35,7 @@ export default function Magnetic({ children }: { children: React.ReactNode }) {
       ref={ref}
       onMouseMove={handleMouse}
       onMouseLeave={reset}
-      className="w-full h-full pointer-events-none"
+      className={` ${className}`}
       animate={{ x, y }}
       transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
     >

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Polaroid, type PolaroidImage } from "./Polaroid";
-import Magnetic from "../overlay/Magnetic";
 
 //TODO: make a preloader for the preloader. I'm just assuming it finishes in 2.4 seconds
 const images: PolaroidImage[] = [
@@ -10,7 +9,6 @@ const images: PolaroidImage[] = [
   },
   {
     src: "/wafflehouse.png",
-    signature: "i feel alive",
   },
   {
     src: "https://images.pexels.com/photos/7591337/pexels-photo-7591337.jpeg",
@@ -29,6 +27,7 @@ const images: PolaroidImage[] = [
   },
   {
     src: "/climber-mini.png",
+    signature: "all the way up",
   },
 ];
 
@@ -39,8 +38,7 @@ const PHOTO_STREAM_ANGLE = 4;
 
 export const PhotoStream = () => {
   const [visibleIndex, setVisibleIndex] = useState(-1);
-  const [animationComplete, setAnimationComplete] = useState(false);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [rumbleState, setRumbleState] = useState<"idle" | "rumbling">("idle");
 
   const rotations = images.map(
     (_, index) =>
@@ -54,10 +52,6 @@ export const PhotoStream = () => {
       const timer = setTimeout(
         () => {
           setVisibleIndex(index);
-          if (index === images.length - 1) {
-            // Animation complete after last image appears
-            setTimeout(() => setAnimationComplete(true), 500);
-          }
         },
         PHOTO_STREAM_DURATION * index + PHOTO_STREAM_DELAY,
       );
@@ -67,27 +61,29 @@ export const PhotoStream = () => {
     return () => timers.forEach((timer) => clearTimeout(timer));
   }, []);
 
+  const handleRumble = () => {
+    if (rumbleState !== "idle") return;
+
+    setRumbleState("rumbling");
+    setTimeout(() => setRumbleState("idle"), 500);
+
+    return;
+  };
+
   return (
     <div className="relative flex items-center justify-center min-h-[200px]">
       {images.map((image, index) => {
         const isVisible = index <= visibleIndex;
-        const isHovered = hoveredIndex === index;
 
-        //As a card gets further in the stack, decrease its opacity slightly
-        const opacity = isHovered ? 1 : (1 / (visibleIndex - index + 1)) * 5;
+        //As a card gets further in the stack, decrease its opacity slightly for a cool effect
+        const opacity = (1 / (visibleIndex - index + 1)) * 5;
 
-        // Calculate movement along the rotation angle
-        const angleInRadians = (rotations[index] * Math.PI) / 180;
-        const moveDistance = 200;
-        const xOffset = isHovered ? Math.sin(angleInRadians) * moveDistance : 0;
-        const yOffset = isHovered
-          ? -Math.cos(angleInRadians) * moveDistance
-          : 0;
+        const isFirstPolaroid = index === images.length - 1;
 
         return (
           <motion.div
             key={index}
-            className="absolute"
+            className="absolute cursor-pointer "
             initial={{
               opacity: 0,
               scale: 1,
@@ -96,45 +92,33 @@ export const PhotoStream = () => {
             animate={{
               opacity: isVisible ? opacity : 0,
               scale: isVisible ? 1 : 1,
-              x: xOffset,
-              y: yOffset,
-              rotate: rotations[index],
+              x:
+                isFirstPolaroid && rumbleState === "rumbling"
+                  ? [-2, 2, -1, 1, 0]
+                  : 0,
+              y:
+                isFirstPolaroid && rumbleState === "rumbling"
+                  ? [-1, 1, -1, 1, 0]
+                  : 0,
             }}
             transition={{
               duration: 0.05,
-              ease: "linear",
-              x: { duration: 0.3, ease: "easeOut", repeat: 0 },
-              y: { duration: 0.3, ease: "easeOut", repeat: 0 },
+              x: { duration: 0.1, repeat: 3 },
+              y: { duration: 0.1, repeat: 3 },
             }}
+            style={{
+              zIndex: index,
+            }}
+            onMouseEnter={isFirstPolaroid ? handleRumble : undefined}
           >
-            <Polaroid image={image} showSignature={animationComplete} />
+            <Polaroid image={image} />
           </motion.div>
         );
       })}
 
-      {/* Dots Navigation */}
-      <div className="absolute -bottom-20 left-1/2 transform -translate-x-1/2 flex gap-2">
-        {images.map((_, index) => (
-          <div
-            key={index}
-            className={`w-4 h-4 rounded-full cursor-pointer transition-all duration-200 ${
-              hoveredIndex === index
-                ? "bg-white scale-125"
-                : index <= visibleIndex
-                  ? "bg-gray-400 hover:bg-gray-300"
-                  : "bg-gray-600"
-            }`}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-          />
-        ))}
-      </div>
-
-      <Magnetic className="absolute -bottom-40">
-        <button className="absolute -bottom-40 rounded-full border border-gray-500 text-white px-4 py-2 cursor-pointer hover:text-black hover:bg-white transition-colors text-xs">
-          Explore
-        </button>
-      </Magnetic>
+      <button className="absolute -bottom-40 rounded-full border border-gray-500 text-white px-4 py-2 cursor-pointer hover:text-black hover:bg-white transition-colors text-xs">
+        Explore
+      </button>
     </div>
   );
 };
