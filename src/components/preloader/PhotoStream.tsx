@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Polaroid, type PolaroidImage } from "./Polaroid";
-import Magnetic from "../overlay/Magnetic";
 
 //TODO: make a preloader for the preloader. I'm just assuming it finishes in 2.4 seconds
 const images: PolaroidImage[] = [
