@@ -6,7 +6,7 @@ import Magnetic from "../overlay/Magnetic";
 //TODO: make a preloader for the preloader. I'm just assuming it finishes in 2.4 seconds
 const images: PolaroidImage[] = [
   {
-    src: "https://www.dpreview.com/files/p/articles/9462076757/1723747.jpeg",
+    src: "",
   },
   {
     src: "/wafflehouse.png",
@@ -19,7 +19,7 @@ const images: PolaroidImage[] = [
     src: "https://www.dpreview.com/files/p/articles/9462076757/1723747.jpeg",
   },
   {
-    src: "https://images.pexels.com/photos/2404843/pexels-photo-2404843.jpeg",
+    src: "/keyboard.webp",
   },
   {
     src: "https://images.pexels.com/photos/7591337/pexels-photo-7591337.jpeg",
@@ -129,12 +129,6 @@ export const PhotoStream = () => {
           />
         ))}
       </div>
-
-      <Magnetic className="absolute -bottom-40">
-        <button className="absolute -bottom-40 rounded-full border border-gray-500 text-white px-4 py-2 cursor-pointer hover:text-black hover:bg-white transition-colors text-xs">
-          Explore
-        </button>
-      </Magnetic>
     </div>
   );
 };

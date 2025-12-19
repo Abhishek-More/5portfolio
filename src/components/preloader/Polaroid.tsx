@@ -16,7 +16,7 @@ export const Polaroid = ({
       <img
         src={image.src}
         alt="img"
-        className="aspect-square backdrop-blur-sm opacity-90 contrast-75 brightness-95 object-cover"
+        className="aspect-square backdrop-blur-sm opacity-90 contrast-75 brightness-95 object-cover object-bottom"
       />
       {image.signature && showSignature && (
         <div className="flex-1 relative">

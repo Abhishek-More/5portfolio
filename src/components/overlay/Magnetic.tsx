@@ -17,7 +17,7 @@ export default function Magnetic({
     const { clientX, clientY } = e;
     const { height, width, left, top } = ref.current.getBoundingClientRect();
 
-    const dampingFactor = 1;
+    const dampingFactor = 0.3;
     const middleX = clientX - (left + width / 2);
     const middleY = clientY - (top + height / 2);
 
@@ -35,7 +35,7 @@ export default function Magnetic({
       ref={ref}
       onMouseMove={handleMouse}
       onMouseLeave={reset}
-      className={` ${className}`}
+      className={`w-full h-full ${className}`}
       animate={{ x, y }}
       transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
     >
