@@ -37,7 +37,7 @@ export const OverlayButton = ({
           href={link}
           target="_blank"
           rel="noreferrer noopener"
-          className="text-white text-[14px] opacity-60 hover:opacity-90 transition-opacity cursor-pointer pointer-events-auto px-1 py-2"
+          className="text-white text-[14px] opacity-60 group-hover:opacity-90 transition-opacity cursor-pointer pointer-events-auto px-1 py-2"
         >
           {text}
         </a>

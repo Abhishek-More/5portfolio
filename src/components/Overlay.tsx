@@ -13,7 +13,7 @@ export const Overlay = () => {
       <motion.div
         initial={{ opacity: 0, y: 20, x: 20, scale: 1.1 }}
         animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
-        transition={{ duration: 0.3, delay: 0.5, ease: "easeInOut" }}
+        transition={{ duration: 0.3, delay: 0.6, ease: "easeInOut" }}
         className="absolute bottom-0 right-0 bg-black"
       >
         <div className="flex items-center gap-4">

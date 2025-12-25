@@ -7,7 +7,7 @@ import { motion } from "motion/react";
 
 export const Gym = () => {
   const [shouldLoadSpline, setShouldLoadSpline] = useState(false);
-  const [gymLoaded, setGymLoaded] = useAtom(gymLoadedAtom);
+  const [_, setGymLoaded] = useAtom(gymLoadedAtom);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -26,12 +26,6 @@ export const Gym = () => {
 
   return (
     <div className="absolute w-full h-full overflow-hidden">
-      <div
-        className={`${gymLoaded ? "opacity-0" : "opacity-100"} absolute w-full h-full overflow-hidden text-center pointer-events-none`}
-      >
-        Loading
-      </div>
-
       {shouldLoadSpline && (
         <motion.div
           initial={{ opacity: 0, scale: 1.2 }}
